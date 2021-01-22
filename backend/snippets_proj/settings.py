@@ -77,13 +77,34 @@ WSGI_APPLICATION = 'snippets_proj.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+# Set up to connect to a dockerized mongodb database. For local filesystem db, use 'localhost' instead of 'mongodb' in CLIENT.host
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'djongo',
+        'ENFORCE_SCHEMA': True,
+        'LOGGING': {
+            'version': 1,
+            'loggers': {
+                'djongo': {
+                    'level': 'DEBUG',
+                    'propogate': False,
+                }
+            },
+        },
+        'NAME': 'snippets_db',
+        'CLIENT': {
+            'host': 'mongodb',  # Name of the docker-compose service
+            'port': 27017,
+            'username': 'admin',
+            'password': "admin",
+            'authSource': 'snippets_db',
+            'authMechanism': 'SCRAM-SHA-1'
+        }
     }
 }
+'''
 
+'''
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
