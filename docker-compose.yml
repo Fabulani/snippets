@@ -13,7 +13,7 @@ services:
         - 27017:27017
     volumes:
         - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
-        - ~/mongodb/data:/data/db
+        - mongodb-data:/data/db
     networks: 
       - snippets-net
 
@@ -51,3 +51,8 @@ services:
 networks:
   snippets-net:
     driver: bridge
+
+# A controlled volume is used to persist mongodb data due to issues with Windows+Docker.
+# Source: https://github.com/docker-library/mariadb/issues/152#issuecomment-363961526
+volumes:
+  mongodb-data:
