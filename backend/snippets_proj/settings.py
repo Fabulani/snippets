@@ -77,8 +77,8 @@ WSGI_APPLICATION = 'snippets_proj.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-# Set up to connect to a dockerized mongodb database. For local filesystem db, use 'localhost' instead of 'mongodb' in CLIENT.host
-DATABASES = {
+# Config for dockerized database
+databases_dockerized = {
     'default': {
         'ENGINE': 'djongo',
         'ENFORCE_SCHEMA': True,
@@ -102,9 +102,18 @@ DATABASES = {
         }
     }
 }
-'''
 
-'''
+# Config for localhost database
+databases_localhost = {
+    'default': {
+        'ENGINE': 'djongo',
+        'NAME': 'snippets_db',
+    }
+}
+
+# Use either databases_dockerized or databases_localhost
+DATABASES = databases_dockerized
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
