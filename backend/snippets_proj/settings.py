@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
+from .secrets import *
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -19,12 +20,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ')6iso!vezns$v36qd%e#g**k7h#+5626+tu4dy$#&mqx8clry1'
-
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
+# TODO: setup allowed_hosts
 ALLOWED_HOSTS = []
 
 
@@ -82,21 +81,12 @@ databases_dockerized = {
     'default': {
         'ENGINE': 'djongo',
         'ENFORCE_SCHEMA': True,
-        'LOGGING': {
-            'version': 1,
-            'loggers': {
-                'djongo': {
-                    'level': 'DEBUG',
-                    'propogate': False,
-                }
-            },
-        },
         'NAME': 'snippets_db',
         'CLIENT': {
             'host': 'mongodb',  # Name of the docker-compose service
             'port': 27017,
-            'username': 'admin',
-            'password': "admin",
+            'username': DB_USER,
+            'password': DB_PASS,
             'authSource': 'snippets_db',
             'authMechanism': 'SCRAM-SHA-1'
         }
